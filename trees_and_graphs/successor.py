@@ -15,23 +15,25 @@ def build_minimal_tree(numbers):
     else:
         return None
 
-def find_successor_node(node, acc=[]):
+def find_successor_node(node, target):
     if node is not None:
-        find_successor_node(node.leftNode, acc)
-        acc.append(node.data)
-        find_successor_node(node.rightNode, acc)
+        lower_val = find_successor_node(node.leftNode, target)
+        higher_val = find_successor_node(node.rightNode, target)
 
-        return acc
+        if lower_val - target > 0:
+            return lower_val
+
+        if node.data - target > 0:
+            return node.data
+
+        if higher_val - target > 0:
+            return higher_val
+
+        return -1
     
-    return acc
+    return -1
 
 target = 7
 tree = build_minimal_tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-acc = find_successor_node(tree)
-
-for index, num in enumerate(acc):
-    if num == target:
-        if index == len(acc)-1:
-            print("None")
-        else:
-            print(acc[index+1])
+acc = find_successor_node(tree, target)
+print(acc)
