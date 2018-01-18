@@ -13,24 +13,20 @@ def rotate_matrix(matrix):
     return newMatrix
 
 def rotate_square_matrix(matrix):
-    n = len(matrix[0])
-    count = 0
+    size = len(matrix)
+    layers = size/2
 
-    while n != 1:
-        
-        for i in range(n-1):
-            tl = matrix[count][count+i]
-            tr = matrix[count+i][count+n-1]
-            br = matrix[count+n-1][count+n-i-1]
-            bl = matrix[count+n-i-1][count]
+    for l in range(layers):
+        for i in range(l, size-1-l):
+            tl = matrix[l][i]
+            tr = matrix[i][size-1-l]
+            br = matrix[size-1-l][size-1-i]
+            bl = matrix[size-1-i][l]
 
-            matrix[count][i+count] = bl
-            matrix[count+i][count+n-1] = tl
-            matrix[count+n-1][count+n-i-1] = tr
-            matrix[count+n-i-1][count] = br
-
-        n = n/2
-        count += 1
+            matrix[l][i] = bl
+            matrix[i][size-1-l] = tl
+            matrix[size-1-l][size-1-i] = tr
+            matrix[size-1-i][l] = br
 
     return matrix
 
